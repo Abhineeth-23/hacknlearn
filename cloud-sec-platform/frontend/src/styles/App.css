@@ -1,0 +1,73 @@
+.App {
+  text-align: center;
+  background-color: #0a0a0a;
+  color: #00ff41;
+  min-height: 100vh;
+  font-family: 'Courier New', monospace;
+}
+
+.App-header {
+  background-color: #1a1a1a;
+  padding: 20px;
+  border-bottom: 2px solid #00ff41;
+}
+
+.App-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  text-shadow: 0 0 10px #00ff41;
+}
+
+.dashboard {
+  padding: 20px;
+}
+
+.lab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.lab-card {
+  background-color: #1a1a1a;
+  border: 1px solid #00ff41;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
+.lab-card h3 {
+  margin-top: 0;
+  color: #ff0080;
+}
+
+.lab-card button {
+  background-color: #00ff41;
+  color: #0a0a0a;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: inherit;
+  margin: 10px 5px;
+}
+
+.lab-card button:hover {
+  background-color: #00cc33;
+}
+
+.lab-card button:disabled {
+  background-color: #666;
+  cursor: not-allowed;
+}
+
+.terminal {
+  margin-top: 20px;
+}
+
+.terminal iframe {
+  border: 1px solid #00ff41;
+  border-radius: 4px;
+}
