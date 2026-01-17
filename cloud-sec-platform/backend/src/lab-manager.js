@@ -1,18 +1,26 @@
 const k8sClient = require('./k8s-client');
 const fs = require('fs');
+const yaml = require('js-yaml');
 const path = require('path');
 
-async function startLab(labId) {
-  const namespace = `lab-${labId}-${Date.now()}`;
+async function startLab(labType, attackImage, targetImage) {
+  const namespace = `lab-${labType}-${Date.now()}`;
 
   try {
     // Create namespace
     await k8sClient.createNamespace(namespace);
 
-    // Load pod templates
-    const attackPodSpec = JSON.parse(fs.readFileSync(path.join(__dirname, '../templates/attack-pod.yaml'), 'utf8'));
-    const targetPodSpec = JSON.parse(fs.readFileSync(path.join(__dirname, '../templates/target-pod.yaml'), 'utf8'));
-    const networkPolicySpec = JSON.parse(fs.readFileSync(path.join(__dirname, '../templates/network-policy.yaml'), 'utf8'));
+    // Load and parse YAML templates
+    const attackPodYaml = fs.readFileSync(path.join(__dirname, '../templates/attack-pod.yaml'), 'utf8');
+    const attackPodSpec = yaml.load(attackPodYaml);
+    attackPodSpec.spec.containers[0].image = attackImage;
+
+    const targetPodYaml = fs.readFileSync(path.join(__dirname, '../templates/target-pod.yaml'), 'utf8');
+    const targetPodSpec = yaml.load(targetPodYaml);
+    targetPodSpec.spec.containers[0].image = targetImage;
+
+    const networkPolicyYaml = fs.readFileSync(path.join(__dirname, '../templates/network-policy.yaml'), 'utf8');
+    const networkPolicySpec = yaml.load(networkPolicyYaml);
 
     // Update namespace in specs
     attackPodSpec.metadata.namespace = namespace;
@@ -62,7 +70,15 @@ async function stopLab(namespace) {
   }
 }
 
+async function getLabs() {
+  // Placeholder: return a list of available labs
+  return [
+    { id: 'lab-01-sqli', name: 'SQL Injection Lab', description: 'Learn about SQL injection vulnerabilities' }
+  ];
+}
+
 module.exports = {
   startLab,
-  stopLab
+  stopLab,
+  getLabs
 };

@@ -1,29 +1,20 @@
-{
-  "apiVersion": "v1",
-  "kind": "Pod",
-  "metadata": {
-    "name": "attack-pod",
-    "labels": {
-      "app": "attack-box"
-    }
-  },
-  "spec": {
-    "containers": [
-      {
-        "name": "kali",
-        "image": "us-central1-docker.pkg.dev/your-project/cloud-sec-repo/attack-box:latest",
-        "command": ["/bin/bash", "-c", "sleep infinity"],
-        "resources": {
-          "requests": {
-            "memory": "512Mi",
-            "cpu": "250m"
-          },
-          "limits": {
-            "memory": "1Gi",
-            "cpu": "500m"
-          }
-        }
-      }
-    ]
-  }
-}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: attack-pod
+  labels:
+    app: attack-box
+spec:
+  containers:
+  - name: attack-box
+    image: placeholder
+    command: ["/bin/bash", "-c", "sleep infinity"]
+    resources:
+      requests:
+        memory: 512Mi
+        cpu: 250m
+      limits:
+        memory: 1Gi
+        cpu: 500m
+    ports:
+    - containerPort: 7681

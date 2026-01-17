@@ -1,3 +1,9 @@
+body {
+  background-color: #0d1117;
+  color: #c9d1d9;
+  font-family: 'Courier New', monospace;
+}
+
 .App {
   text-align: center;
   background-color: #0a0a0a;
@@ -7,9 +13,9 @@
 }
 
 .App-header {
-  background-color: #1a1a1a;
+  background-color: #161b22;
   padding: 20px;
-  border-bottom: 2px solid #00ff41;
+  border-bottom: 1px solid #30363d;
 }
 
 .App-header h1 {
@@ -30,11 +36,11 @@
 }
 
 .lab-card {
-  background-color: #1a1a1a;
-  border: 1px solid #00ff41;
-  border-radius: 8px;
+  border: 1px solid #30363d;
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+  margin: 20px;
+  border-radius: 6px;
+  background: #0d1117;
 }
 
 .lab-card h3 {
@@ -43,19 +49,18 @@
 }
 
 .lab-card button {
-  background-color: #00ff41;
-  color: #0a0a0a;
+  background-color: #238636;
+  color: white;
   border: none;
   padding: 10px 20px;
-  font-size: 1rem;
+  border-radius: 6px;
   cursor: pointer;
-  border-radius: 4px;
-  font-family: inherit;
+  font-size: 16px;
   margin: 10px 5px;
 }
 
 .lab-card button:hover {
-  background-color: #00cc33;
+  background-color: #2ea043;
 }
 
 .lab-card button:disabled {

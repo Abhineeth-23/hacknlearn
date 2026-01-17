@@ -1,14 +1,15 @@
-{
-  "apiVersion": "networking.k8s.io/v1",
-  "kind": "NetworkPolicy",
-  "metadata": {
-    "name": "deny-all"
-  },
-  "spec": {
-    "podSelector": {},
-    "policyTypes": [
-      "Ingress",
-      "Egress"
-    ]
-  }
-}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: isolate-student
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector: {} # Only allow traffic from SAME namespace
+  egress:
+  - to:
+    - podSelector: {} # Only allow traffic to SAME namespace

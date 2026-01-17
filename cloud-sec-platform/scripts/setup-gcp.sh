@@ -1,12 +1,7 @@
 #!/bin/bash
 
-# Cloud Security Platform - GCP Setup Script
-# This script enables required APIs and creates necessary resources
-
-set -e
-
-PROJECT_ID=${1:-"cloud-sec-platform"}
-REGION=${2:-"us-central1"}
+PROJECT_ID=$1
+REGION=us-central1
 
 echo "Setting up GCP project: $PROJECT_ID"
 
@@ -45,8 +40,7 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
 
 # Create and download service account key
 echo "Creating service account key..."
-gcloud iam service-accounts keys create service-account.json \
-    --iam-account=cloud-sec-sa@$PROJECT_ID.iam.gserviceaccount.com \
-    --project=$PROJECT_ID
+gcloud iam service-accounts keys create backend/service-account.json \
+    --iam-account=cloud-sec-sa@$PROJECT_ID.iam.gserviceaccount.com
 
 echo "Setup complete! Service account key saved to service-account.json"

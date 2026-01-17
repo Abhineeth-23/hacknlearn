@@ -1,46 +1,32 @@
 const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-
-dotenv.config();
-
+const { startLab, stopLab, getLabs } = require('./src/lab-manager');
 const app = express();
-const PORT = process.env.PORT || 3001;
-
-app.use(cors());
 app.use(express.json());
 
-// Routes
-app.get('/api/labs', (req, res) => {
-  // Return list of available labs
-  res.json([
-    { id: 'lab-01-sqli', name: 'SQL Injection Lab', description: 'Practice SQL injection attacks' }
-  ]);
-});
+const PROJECT_ID = process.env.GCP_PROJECT_ID;  // Changed to match .env
+const REGION = 'us-central1';
+const REPO_NAME = 'cloud-sec-repo';  // Consistent with scripts
 
-app.post('/api/labs/:labId/start', async (req, res) => {
-  const { labId } = req.params;
+app.post('/api/start-lab', async (req, res) => {
   try {
-    // Logic to start lab using Kubernetes
-    const labManager = require('./src/lab-manager');
-    const result = await labManager.startLab(labId);
+    const { labType } = req.body;
+    const attackImage = `us-central1-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/attack-box:latest`;  // Updated repo and tag
+    const targetImage = `us-central1-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/lab-01-sqli:latest`;
+    const result = await startLab(labType, attackImage, targetImage);
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.post('/api/labs/:labId/stop', async (req, res) => {
-  const { labId } = req.params;
+// New endpoint for /api/labs
+app.get('/api/labs', async (req, res) => {
   try {
-    const labManager = require('./src/lab-manager');
-    const result = await labManager.stopLab(labId);
-    res.json(result);
+    const labs = await getLabs();
+    res.json(labs);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Backend server running on port ${PORT}`);
-});
+app.listen(3001, () => console.log('Backend listening on port 3001'));

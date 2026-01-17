@@ -1,23 +1,16 @@
-const API_BASE_URL = 'http://localhost:3001/api';
+const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:3001';
 
 export const getLabs = async () => {
-  const response = await fetch(`${API_BASE_URL}/labs`);
-  if (!response.ok) {
-    throw new Error('Failed to fetch labs');
-  }
+  const response = await fetch(`${API_BASE}/api/labs`);
   return response.json();
 };
 
-export const startLab = async (labId) => {
-  const response = await fetch(`${API_BASE_URL}/labs/${labId}/start`, {
+export const startLab = async (labType) => {
+  const response = await fetch(`${API_BASE}/api/start-lab`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ labType }),
   });
-  if (!response.ok) {
-    throw new Error('Failed to start lab');
-  }
   return response.json();
 };
 
